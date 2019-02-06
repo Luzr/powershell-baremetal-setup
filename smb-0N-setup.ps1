@@ -1,5 +1,6 @@
 # made on 12.8.2018
 # updated 2.6.2019
+# for server 2012 r2
 # orgin from smb lab domain
 
 $server_name = "server-name"
@@ -39,7 +40,7 @@ foreach ($netAdapter in $netAdapters){
 Install-WindowsFeature -Name Hyper-V -IncludeManagementTools
 
 # stop copy paste here 
-set-timezone "Central Standard Time"
+tzutil /s "Central Standard Time"
 
 Restart-Computer
 
