@@ -2,7 +2,7 @@
 # updated 2.6.2019
 # orgin from smb lab domain
 
-$server_name = "server-name"
+$server_name = "air-hv-br"
 Rename-Computer $server_name
 
 # rename nic 
@@ -45,8 +45,10 @@ Restart-Computer
 
 
 # create network team and add nics
-New-NetLbfoTeam -Name lbfo-1 –TeamMembers intel-101, intel-102, intel-103, intel-104 -TeamingMode SwitchIndependent -LoadBalancingAlgorithm HyperVPort -Confirm:$false
-New-VMSwitch -Name vSwitch-team-1 –NetAdapterName lbfo-1 –MinimumBandwidthMode Weight –AllowManagementOS $false -EnableIov $true
+New-NetLbfoTeam -Name lbfo-1 –TeamMembers intel-101, intel-102 -TeamingMode SwitchIndependent -LoadBalancingAlgorithm HyperVPort -Confirm:$false
+# Min weight doenst work
+# New-VMSwitch -Name vSwitch-team-1 –NetAdapterName lbfo-1 –MinimumBandwidthMode Weight –AllowManagementOS $false -EnableIov $true
+New-VMSwitch -Name vSwitch-team-1 –NetAdapterName lbfo-1 –AllowManagementOS $false -EnableIov $true
 
 # Remove-VMNetworkAdapter -ManagementOS -Name mgmt-1
 
@@ -56,10 +58,10 @@ Rename-NetAdapter -Name "vEthernet (mgmt-1)" -NewName mgmt-1
 
 
 $managementNic = "mgmt-1"
-$IP = "10.1.10.42"
+$IP = "192.168.50.202"
 $MaskBits = 24
-$Gateway = "10.1.10.5"
-$DNS = "10.1.10.10" 
+$Gateway = "192.168.50.1"
+$DNS = "1" 
 $IPType = "IPv4"
 
 # Configure the IP address and default gateway
